@@ -23,7 +23,7 @@ function generateCursorBody(messages, modelName) {
   const chatBody = {
     userMessages: formattedMessages,
     instructions: {
-      instruction: "Alway respond in 中文.\n" + instruction
+      instruction: instruction
     },
     model: {
       name: modelName,
