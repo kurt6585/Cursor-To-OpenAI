@@ -128,13 +128,7 @@ message StreamUnifiedChatWithToolsResponse {
     string content = 1;
     string unknown22 = 22; // uuid
   }
-  message Summary {
-    string content = 1;
-    string unknown2 = 2; // uuid
-    string unknown3 = 3; // uuid, equal to unknown2
-    string summaryId = 4; 
-  }
 
   Message message = 2;
-  Summary summary = 3;
+  MessageSummary summary = 3;
 }
