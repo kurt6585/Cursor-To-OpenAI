@@ -5399,7 +5399,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
      * @exports IStreamUnifiedChatWithToolsResponse
      * @interface IStreamUnifiedChatWithToolsResponse
      * @property {StreamUnifiedChatWithToolsResponse.IMessage|null} [message] StreamUnifiedChatWithToolsResponse message
-     * @property {StreamUnifiedChatWithToolsResponse.ISummary|null} [summary] StreamUnifiedChatWithToolsResponse summary
+     * @property {IMessageSummary|null} [summary] StreamUnifiedChatWithToolsResponse summary
      */
 
     /**
@@ -5427,7 +5427,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
 
     /**
      * StreamUnifiedChatWithToolsResponse summary.
-     * @member {StreamUnifiedChatWithToolsResponse.ISummary|null|undefined} summary
+     * @member {IMessageSummary|null|undefined} summary
      * @memberof StreamUnifiedChatWithToolsResponse
      * @instance
      */
@@ -5460,7 +5460,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         if (message.message != null && Object.hasOwnProperty.call(message, "message"))
             $root.StreamUnifiedChatWithToolsResponse.Message.encode(message.message, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
         if (message.summary != null && Object.hasOwnProperty.call(message, "summary"))
-            $root.StreamUnifiedChatWithToolsResponse.Summary.encode(message.summary, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            $root.MessageSummary.encode(message.summary, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
         return writer;
     };
 
@@ -5500,7 +5500,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
                     break;
                 }
             case 3: {
-                    message.summary = $root.StreamUnifiedChatWithToolsResponse.Summary.decode(reader, reader.uint32());
+                    message.summary = $root.MessageSummary.decode(reader, reader.uint32());
                     break;
                 }
             default:
@@ -5544,7 +5544,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
                 return "message." + error;
         }
         if (message.summary != null && message.hasOwnProperty("summary")) {
-            var error = $root.StreamUnifiedChatWithToolsResponse.Summary.verify(message.summary);
+            var error = $root.MessageSummary.verify(message.summary);
             if (error)
                 return "summary." + error;
         }
@@ -5571,7 +5571,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         if (object.summary != null) {
             if (typeof object.summary !== "object")
                 throw TypeError(".StreamUnifiedChatWithToolsResponse.summary: object expected");
-            message.summary = $root.StreamUnifiedChatWithToolsResponse.Summary.fromObject(object.summary);
+            message.summary = $root.MessageSummary.fromObject(object.summary);
         }
         return message;
     };
@@ -5596,7 +5596,7 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         if (message.message != null && message.hasOwnProperty("message"))
             object.message = $root.StreamUnifiedChatWithToolsResponse.Message.toObject(message.message, options);
         if (message.summary != null && message.hasOwnProperty("summary"))
-            object.summary = $root.StreamUnifiedChatWithToolsResponse.Summary.toObject(message.summary, options);
+            object.summary = $root.MessageSummary.toObject(message.summary, options);
         return object;
     };
 
@@ -5851,279 +5851,6 @@ $root.StreamUnifiedChatWithToolsResponse = (function() {
         };
 
         return Message;
-    })();
-
-    StreamUnifiedChatWithToolsResponse.Summary = (function() {
-
-        /**
-         * Properties of a Summary.
-         * @memberof StreamUnifiedChatWithToolsResponse
-         * @interface ISummary
-         * @property {string|null} [content] Summary content
-         * @property {string|null} [unknown2] Summary unknown2
-         * @property {string|null} [unknown3] Summary unknown3
-         * @property {string|null} [summaryId] Summary summaryId
-         */
-
-        /**
-         * Constructs a new Summary.
-         * @memberof StreamUnifiedChatWithToolsResponse
-         * @classdesc Represents a Summary.
-         * @implements ISummary
-         * @constructor
-         * @param {StreamUnifiedChatWithToolsResponse.ISummary=} [properties] Properties to set
-         */
-        function Summary(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Summary content.
-         * @member {string} content
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @instance
-         */
-        Summary.prototype.content = "";
-
-        /**
-         * Summary unknown2.
-         * @member {string} unknown2
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @instance
-         */
-        Summary.prototype.unknown2 = "";
-
-        /**
-         * Summary unknown3.
-         * @member {string} unknown3
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @instance
-         */
-        Summary.prototype.unknown3 = "";
-
-        /**
-         * Summary summaryId.
-         * @member {string} summaryId
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @instance
-         */
-        Summary.prototype.summaryId = "";
-
-        /**
-         * Creates a new Summary instance using the specified properties.
-         * @function create
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {StreamUnifiedChatWithToolsResponse.ISummary=} [properties] Properties to set
-         * @returns {StreamUnifiedChatWithToolsResponse.Summary} Summary instance
-         */
-        Summary.create = function create(properties) {
-            return new Summary(properties);
-        };
-
-        /**
-         * Encodes the specified Summary message. Does not implicitly {@link StreamUnifiedChatWithToolsResponse.Summary.verify|verify} messages.
-         * @function encode
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {StreamUnifiedChatWithToolsResponse.ISummary} message Summary message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Summary.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.content != null && Object.hasOwnProperty.call(message, "content"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.content);
-            if (message.unknown2 != null && Object.hasOwnProperty.call(message, "unknown2"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.unknown2);
-            if (message.unknown3 != null && Object.hasOwnProperty.call(message, "unknown3"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.unknown3);
-            if (message.summaryId != null && Object.hasOwnProperty.call(message, "summaryId"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.summaryId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified Summary message, length delimited. Does not implicitly {@link StreamUnifiedChatWithToolsResponse.Summary.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {StreamUnifiedChatWithToolsResponse.ISummary} message Summary message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Summary.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a Summary message from the specified reader or buffer.
-         * @function decode
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {StreamUnifiedChatWithToolsResponse.Summary} Summary
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Summary.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.StreamUnifiedChatWithToolsResponse.Summary();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.content = reader.string();
-                        break;
-                    }
-                case 2: {
-                        message.unknown2 = reader.string();
-                        break;
-                    }
-                case 3: {
-                        message.unknown3 = reader.string();
-                        break;
-                    }
-                case 4: {
-                        message.summaryId = reader.string();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a Summary message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {StreamUnifiedChatWithToolsResponse.Summary} Summary
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Summary.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a Summary message.
-         * @function verify
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        Summary.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.content != null && message.hasOwnProperty("content"))
-                if (!$util.isString(message.content))
-                    return "content: string expected";
-            if (message.unknown2 != null && message.hasOwnProperty("unknown2"))
-                if (!$util.isString(message.unknown2))
-                    return "unknown2: string expected";
-            if (message.unknown3 != null && message.hasOwnProperty("unknown3"))
-                if (!$util.isString(message.unknown3))
-                    return "unknown3: string expected";
-            if (message.summaryId != null && message.hasOwnProperty("summaryId"))
-                if (!$util.isString(message.summaryId))
-                    return "summaryId: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a Summary message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {StreamUnifiedChatWithToolsResponse.Summary} Summary
-         */
-        Summary.fromObject = function fromObject(object) {
-            if (object instanceof $root.StreamUnifiedChatWithToolsResponse.Summary)
-                return object;
-            var message = new $root.StreamUnifiedChatWithToolsResponse.Summary();
-            if (object.content != null)
-                message.content = String(object.content);
-            if (object.unknown2 != null)
-                message.unknown2 = String(object.unknown2);
-            if (object.unknown3 != null)
-                message.unknown3 = String(object.unknown3);
-            if (object.summaryId != null)
-                message.summaryId = String(object.summaryId);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a Summary message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {StreamUnifiedChatWithToolsResponse.Summary} message Summary
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        Summary.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.content = "";
-                object.unknown2 = "";
-                object.unknown3 = "";
-                object.summaryId = "";
-            }
-            if (message.content != null && message.hasOwnProperty("content"))
-                object.content = message.content;
-            if (message.unknown2 != null && message.hasOwnProperty("unknown2"))
-                object.unknown2 = message.unknown2;
-            if (message.unknown3 != null && message.hasOwnProperty("unknown3"))
-                object.unknown3 = message.unknown3;
-            if (message.summaryId != null && message.hasOwnProperty("summaryId"))
-                object.summaryId = message.summaryId;
-            return object;
-        };
-
-        /**
-         * Converts this Summary to JSON.
-         * @function toJSON
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        Summary.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for Summary
-         * @function getTypeUrl
-         * @memberof StreamUnifiedChatWithToolsResponse.Summary
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        Summary.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/StreamUnifiedChatWithToolsResponse.Summary";
-        };
-
-        return Summary;
     })();
 
     return StreamUnifiedChatWithToolsResponse;
