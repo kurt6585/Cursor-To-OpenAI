@@ -30,7 +30,7 @@ function generateCursorBody(messages, modelName) {
       messages: formattedMessages,
       unknown2: 1,
       instruction: {
-        instruction: "Alway respond in 中文.\n" + instruction
+        instruction: instruction
       },
       unknown4: 1,
       model: {
@@ -114,7 +114,7 @@ function chunkToUtf8String(chunk) {
         const message = JSON.parse(utf8)
         if (message != null && (typeof message !== 'object' || 
           (Array.isArray(message) ? message.length > 0 : Object.keys(message).length > 0))){
-            results.push(utf8)
+            //results.push(utf8)
             console.error(utf8)
         }
       }
@@ -147,11 +147,9 @@ function obfuscateBytes(byteArray) {
 }
 
 function generateCursorChecksum(token) {
-  // 生成machineId和macMachineId
   const machineId = generateHashed64Hex(token, 'machineId');
   const macMachineId = generateHashed64Hex(token, 'macMachineId');
 
-  // 获取时间戳并转换为字节数组
   const timestamp = Math.floor(Date.now() / 1e6);
   const byteArray = new Uint8Array([
     (timestamp >> 40) & 255,
@@ -162,11 +160,9 @@ function generateCursorChecksum(token) {
     255 & timestamp,
   ]);
 
-  // 混淆字节数组并进行base64编码
   const obfuscatedBytes = obfuscateBytes(byteArray);
   const encodedChecksum = Buffer.from(obfuscatedBytes).toString('base64');
 
-  // 组合最终的checksum
   return `${encodedChecksum}${machineId}/${macMachineId}`;
 }
 
