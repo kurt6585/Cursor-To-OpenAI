@@ -203,7 +203,7 @@ router.post('/chat/completions', async (req, res) => {
         for await (const chunk of response.body) {
           text += chunkToUtf8String(chunk);
         }
-        // 对解析后的字符串进行进一步处理
+
         text = text.replace(/^.*<\|END_USER\|>/s, '');
         text = text.replace(/^\n[a-zA-Z]?/, '').trim();
         // console.log(text)
