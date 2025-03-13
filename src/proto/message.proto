@@ -43,7 +43,6 @@ message StreamUnifiedChatWithToolsRequest {
       string name = 1;
       bytes empty = 4;
     }
-
     message CursorSetting {
       message Unknown6 {
         bytes unknown1 = 1;
