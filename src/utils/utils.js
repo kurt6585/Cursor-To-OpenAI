@@ -114,7 +114,7 @@ function chunkToUtf8String(chunk) {
         const message = JSON.parse(utf8)
         if (message != null && (typeof message !== 'object' || 
           (Array.isArray(message) ? message.length > 0 : Object.keys(message).length > 0))){
-            //results.push(utf8)
+            results.push(utf8)
             console.error(utf8)
         }
       }
