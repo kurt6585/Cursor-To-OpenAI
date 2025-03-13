@@ -20,7 +20,7 @@ router.get("/models", async (req, res) => {
 
     const cursorChecksum = req.headers['x-cursor-checksum'] 
       ?? generateCursorChecksum(authToken.trim());
-    const cursorClientVersion = "0.46.8"
+    const cursorClientVersion = "0.46.11"
 
     const availableModelsResponse = await fetch("https://api2.cursor.sh/aiserver.v1.AiService/AvailableModels", {
       method: 'POST',
@@ -71,9 +71,14 @@ router.post('/chat/completions', async (req, res) => {
     const { model, messages, stream = false } = req.body;
     let bearerToken = req.headers.authorization?.replace('Bearer ', '');
     const keys = bearerToken.split(',').map((key) => key.trim());
-
     // Randomly select one key to use
     let authToken = keys[Math.floor(Math.random() * keys.length)]
+
+    if (!messages || !Array.isArray(messages) || messages.length === 0 || !authToken) {
+      return res.status(400).json({
+        error: 'Invalid request. Messages should be a non-empty array and authorization is required',
+      });
+    }
 
     if (authToken && authToken.includes('%3A%3A')) {
       authToken = authToken.split('%3A%3A')[1];
@@ -82,19 +87,13 @@ router.post('/chat/completions', async (req, res) => {
       authToken = authToken.split('::')[1];
     }
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0 || !authToken) {
-      return res.status(400)
-                .json({
-                  error: 'Invalid request. Messages should be a non-empty array and authorization is required',
-                });
-    }
 
     const cursorChecksum = req.headers['x-cursor-checksum']
       ?? generateCursorChecksum(authToken.trim());
 
     const sessionid = uuidv5(authToken,  uuidv5.DNS);
     const clientKey = generateHashed64Hex(authToken)
-    const cursorClientVersion = "0.46.8"
+    const cursorClientVersion = "0.46.11"
     const cursorConfigVersion = uuidv4();
 
     // Request the AvailableModels before StreamChat.
@@ -152,8 +151,9 @@ router.post('/chat/completions', async (req, res) => {
     });
 
     if (response.status !== 200) {
-      return res.status(response.status)
-                .json({ error: response.statusText });
+      return res.status(response.status).json({ 
+        error: response.statusText 
+      });
     }
 
     if (stream) {
@@ -173,15 +173,13 @@ router.post('/chat/completions', async (req, res) => {
                 id: responseId,
                 object: 'chat.completion.chunk',
                 created: Math.floor(Date.now() / 1000),
-                model: req.body.model,
-                choices: [
-                  {
-                    index: 0,
-                    delta: {
-                      content: text,
-                    },
+                model: model,
+                choices: [{
+                  index: 0,
+                  delta: {
+                    content: text,
                   },
-                ],
+                }],
               })}\n\n`
             );
           }
@@ -198,21 +196,19 @@ router.post('/chat/completions', async (req, res) => {
         res.end();
       }
     } else {
+      // Non-streaming response
       try {
         let text = '';
         for await (const chunk of response.body) {
           text += chunkToUtf8String(chunk);
         }
 
-        text = text.replace(/^.*<\|END_USER\|>/s, '');
-        text = text.replace(/^\n[a-zA-Z]?/, '').trim();
-        // console.log(text)
 
         return res.json({
           id: `chatcmpl-${uuidv4()}`,
           object: 'chat.completion',
           created: Math.floor(Date.now() / 1000),
-          model,
+          model: model,
           choices: [
             {
               index: 0,
